@@ -6,9 +6,12 @@ set -e
 echo "=== Installing Prism Launcher 9.4 (AppImage) ==="
 echo
 
-# Remove the newer Flatpak version
-echo "Removing newer Flatpak version..."
-flatpak uninstall -y org.prismlauncher.PrismLauncher || true
+# Check for conflicting Flatpak version
+if flatpak list | grep -q "org.prismlauncher.PrismLauncher"; then
+	echo "Error: Flatpak version of Prism Launcher is installed."
+	echo "Please uninstall it first: flatpak uninstall org.prismlauncher.PrismLauncher"
+	exit 1
+fi
 
 # Create directory for AppImage
 mkdir -p "$HOME/Applications"
@@ -23,15 +26,13 @@ chmod +x PrismLauncher-9.4.AppImage
 
 # Create desktop entry
 echo "Creating desktop entry..."
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 mkdir -p "$HOME/.local/share/applications"
 cat >"$HOME/.local/share/applications/minecraft-prism.desktop" <<EOF
 [Desktop Entry]
 Type=Application
 Name=Minecraft (Prism Launcher)
 Comment=Launch Minecraft with Prism Launcher
-Exec=$SCRIPT_DIR/launch.sh
-Path=$SCRIPT_DIR
+Exec=$HOME/Applications/PrismLauncher-9.4.AppImage
 Icon=minecraft
 Terminal=false
 Categories=Game;
@@ -41,7 +42,7 @@ echo
 echo "=== Installation Complete ==="
 echo
 echo "Next steps:"
-echo "1. Run: ./launch.sh"
+echo "1. Launch Prism Launcher from your application menu"
 echo "2. Complete the setup wizard"
 echo "3. Close the launcher completely"
 echo "4. Run: ./apply-bypass.sh"

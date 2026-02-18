@@ -30,7 +30,7 @@ echo
 echo "=== Configuration Applied Successfully ==="
 echo
 echo "Next steps:"
-echo "1. Launch Prism Launcher: ./launch.sh"
+echo "1. Launch Prism Launcher from your application menu"
 echo "2. Click 'Accounts' → 'Add Offline'"
 echo "3. Enter your desired username"
 echo "4. Set as default profile"
