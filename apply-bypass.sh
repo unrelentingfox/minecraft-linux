@@ -7,9 +7,9 @@ echo "=== Applying Offline Configuration ==="
 echo
 
 # Check if launcher is running
-if pgrep -f "PrismLauncher" > /dev/null; then
-    echo "Error: Prism Launcher is running. Please close it first."
-    exit 1
+if pgrep -f "PrismLauncher" >/dev/null; then
+	echo "Error: Prism Launcher is running. Please close it first."
+	exit 1
 fi
 
 # AppImage stores data in ~/.local/share/PrismLauncher
@@ -18,13 +18,13 @@ mkdir -p "$PRISM_DATA_DIR"
 
 # Backup existing accounts.json if it exists
 if [ -f "$PRISM_DATA_DIR/accounts.json" ]; then
-    echo "Backing up existing accounts.json..."
-    cp "$PRISM_DATA_DIR/accounts.json" "$PRISM_DATA_DIR/accounts.json.backup.$(date +%Y%m%d_%H%M%S)"
+	echo "Backing up existing accounts.json..."
+	cp "$PRISM_DATA_DIR/accounts.json" "$PRISM_DATA_DIR/accounts.json.backup.$(date +%Y%m%d_%H%M%S)"
 fi
 
 # Create bypass configuration
 echo "Creating bypass configuration..."
-echo '{"accounts": [{"entitlement": {"canPlayMinecraft": true,"ownsMinecraft": true},"type": "MSA"}],"formatVersion": 3}' > "$PRISM_DATA_DIR/accounts.json"
+echo '{"accounts": [{"entitlement": {"canPlayMinecraft": true,"ownsMinecraft": true},"type": "MSA"}],"formatVersion": 3}' >"$PRISM_DATA_DIR/accounts.json"
 
 echo
 echo "=== Configuration Applied Successfully ==="

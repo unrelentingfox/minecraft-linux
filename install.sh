@@ -11,15 +11,31 @@ echo "Removing newer Flatpak version..."
 flatpak uninstall -y org.prismlauncher.PrismLauncher || true
 
 # Create directory for AppImage
-mkdir -p ~/Applications
+mkdir -p "$HOME/Applications"
 
 # Download Prism Launcher 9.4
 echo "Downloading Prism Launcher 9.4..."
-cd ~/Applications
+cd "$HOME/Applications"
 wget -O PrismLauncher-9.4.AppImage "https://github.com/PrismLauncher/PrismLauncher/releases/download/9.4/PrismLauncher-Linux-x86_64.AppImage"
 
 # Make it executable
 chmod +x PrismLauncher-9.4.AppImage
+
+# Create desktop entry
+echo "Creating desktop entry..."
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+mkdir -p "$HOME/.local/share/applications"
+cat >"$HOME/.local/share/applications/minecraft-prism.desktop" <<EOF
+[Desktop Entry]
+Type=Application
+Name=Minecraft (Prism Launcher)
+Comment=Launch Minecraft with Prism Launcher
+Exec=$SCRIPT_DIR/launch.sh
+Path=$SCRIPT_DIR
+Icon=minecraft
+Terminal=false
+Categories=Game;
+EOF
 
 echo
 echo "=== Installation Complete ==="
